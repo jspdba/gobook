@@ -62,6 +62,13 @@ func init() {
 			AllowHTTPMethods: []string{"get"},
 			Params: nil})
 
+	beego.GlobalControllerRouter["gobook/controllers:BookController"] = append(beego.GlobalControllerRouter["gobook/controllers:BookController"],
+		beego.ControllerComments{
+			Method: "LocalUpdate",
+			Router: `/book/localUpdate/:id([0-9]+)`,
+			AllowHTTPMethods: []string{"get"},
+			Params: nil})
+
 	beego.GlobalControllerRouter["gobook/controllers:ChapterController"] = append(beego.GlobalControllerRouter["gobook/controllers:ChapterController"],
 		beego.ControllerComments{
 			Method: "Edit",

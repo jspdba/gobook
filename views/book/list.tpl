@@ -20,11 +20,31 @@
                         <td colspan="2"><a href="{{urlfor "BookController.Edit" ":id" .Id}}" title="{{.Name}}">{{.Name}}</a></td>
                         <td>
                             <div class="btn-group pull-right">
-                                <!--<a type="button" class="btn btn-primary" href="{{urlfor "ChapterController.DeleteBook" ":id" .Id}}">删除章节</a>-->
-                                <a type="button" class="btn btn-primary export" link="{{urlfor "BookController.Export" ":id" .Id}}">mysql上传章节</a>
-                                <a type="button" class="btn btn-primary" href="{{urlfor "ChapterController.List" ":id" .Id}}">查看章节</a>
-                                <a type="button" class="btn btn-info updateChapter" link="{{urlfor "BookController.TaskUpdate" ":id" .Id}}">更新章节</a>
                                 <a type="button" class="btn btn-primary toRead" link="{{urlfor "ChapterController.ListByLog" ":tag" "T_A_G" ":id" .Id}}">继续阅读</a>
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">切换下拉菜单</span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    {{if eq $.runmode "dev"}}
+                                    <li>
+                                        <a type="button" class="btn btn-primary export" link="{{urlfor "BookController.Export" ":id" .Id}}">上传章节</a>
+                                    </li>
+                                    <li>
+                                        <a type="button" class="btn btn-primary" href="{{urlfor "ChapterController.DeleteBook" ":id" .Id}}">清空章节</a>
+                                    </li>
+                                    <li>
+                                        <a type="button" class="btn btn-primary localUpdate" link="{{urlfor "BookController.LocalUpdate" ":id" .Id}}">远程更新空章节</a>
+                                    </li>
+                                    {{end}}
+                                    <!--<li class="divider"></li>-->
+                                    <li>
+                                        <a type="button" class="btn btn-primary" href="{{urlfor "ChapterController.List" ":id" .Id}}">章节列表</a>
+                                    </li>
+                                    <li>
+                                        <a type="button" class="btn btn-info updateChapter" link="{{urlfor "BookController.TaskUpdate" ":id" .Id}}">更新章节</a>
+                                    </li>
+                                </ul>
                             </div>
                         </td>
                         <td class="news" bid="{{.Id}}" data-url="{{urlfor "ChapterController.HasNewChapter" ":id" .Id}}">
@@ -118,6 +138,17 @@
                     alert("上传成功")
                 }else{
                     alert("上传失败="+data.msg)
+                }
+            })
+        })
+        $(".localUpdate").bind("click",function () {
+            var link=$(this).attr("link")
+
+            $.getJSON(link,function (data) {
+                if(data.code==0){
+                    alert("远程更新空章节成功")
+                }else{
+                    alert("远程更新空章节失败="+data.msg)
                 }
             })
         })

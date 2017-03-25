@@ -24,6 +24,7 @@ func (this *BookController) URLMapping() {
 	this.Mapping("/book/url/info", this.UrlInfo)
 	this.Mapping("/book/search", this.Search)
 	this.Mapping("/book/export", this.Export)
+	this.Mapping("/book/localUpdate", this.LocalUpdate)
 }
 
 // @router /book/edit/:id([0-9]{0,}) [get]
@@ -59,44 +60,6 @@ func (this *BookController) TaskUpdate() {
 		if i,err:=strconv.ParseInt(id, 10, 64); err==nil{
 			ok,book:=models.FindBookById(i)
 			if ok{
-				/*tag:="cache_book_"+id
-				if !cache.IsExist(tag){
-					cache.Put(tag,time.Now().Format("2006-01-02 15:04:05"),time.Second*60*10)
-					//更新章节
-					go (func(book *models.Book) bool{
-						if book!=nil{
-							//申请任务调度
-							if book.Url!=""{
-								chapters:= service.GetUrlInfo(book.Url,book.ChapterRules,-1)
-								//增加index
-								for i:=len(chapters);i>0;i--{
-									chapters[i-1].Index=i
-								}
-								if ok,ch:=models.FindMaxIndexChapter(book);ok{
-									if ch.Index<len(chapters){
-										chapters=chapters[ch.Index:]
-									}else{
-										cache.Delete(tag)
-										return false
-									}
-								}
-
-								service.GetChapterContent(book.ContentRules,chapters,100)
-								for _,chapter := range chapters{
-									chapter.Book= book
-								}
-								beego.Info("begin >>>>>>>>>>>>")
-								models.ChapterInsertMulti(chapters)
-								beego.Info("<<<<<<<<<<< over")
-							}
-						}
-						cache.Delete(tag)
-						return true
-					})(&book)
-					json = JsonObj{Code: 0, Msg:"ok"}
-				}else{
-					json = JsonObj{Code: -1, Msg:tag+"=正在更新！更新时间="+cache.Get(tag).(string)}
-				}*/
 				tag:="cache_book_"+id
 				if isRunning:=service.UpdateBook(&book,tag);isRunning{
 					json = JsonObj{Code: -1, Msg:tag+"=正在更新！更新时间="+cache.Get(tag).(string)}
@@ -171,6 +134,7 @@ func (this *BookController) List() {
 	if err := this.ParseForm(&page); err != nil {
 		beego.Error(err)
 	}
+	this.Data["runmode"] = beego.AppConfig.String("runmode")
 	this.Data["page"] = models.BookPage(page.PageNo,page.PageSize)
 	this.TplName = "book/list.tpl"
 }
@@ -187,6 +151,38 @@ func (this *BookController) Export() {
 	if err!=nil{
 		jsonMap["msg"]=err.Error()
 	}else{
+		jsonMap["code"]=0
+		jsonMap["msg"]="ok"
+	}
+
+	this.Data["json"] = jsonMap
+	this.ServeJSON()
+}
+// @router /book/localUpdate/:id([0-9]+)
+func (this *BookController) LocalUpdate() {
+
+	id:=this.Ctx.Input.Param(":id")
+	err,chapters,rule:=models.FindEmptyChapters(id)
+
+	jsonMap:=map[string]interface{}{
+		"code":-1,
+		"msg":"",
+	}
+	if err!=nil{
+		jsonMap["msg"]=err.Error()
+	}else{
+		go (func() {
+
+			service.GetChapterContent(rule,chapters,100)
+
+			/*for _,chapter:=range chapters{
+				beego.Info("抓取="+chapter.Title)
+				content:=service.GetContent(chapter.Url,rule)
+				chapter.Content=content
+			}*/
+
+			models.UpdateChapterContent(chapters)
+		})()
 		jsonMap["code"]=0
 		jsonMap["msg"]="ok"
 	}

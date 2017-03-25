@@ -499,7 +499,44 @@ func Export(id string) error{
 	i.Close()
 	return err
 }
+//获取id=book.id内容为空的章节
+func FindEmptyChapters(id string) (error,[]*Chapter,string){
+	remoteOrm := orm.NewOrm()
+	remoteOrm.Using("remote")
 
+	var book Book
+	var toExportChapterList []*Chapter
+
+	err:=remoteOrm.QueryTable("book").Filter("Id",id).One(&book)
+
+	if err!=nil{
+		return err,toExportChapterList,""
+	}
+	_,err=remoteOrm.QueryTable("chapter").Filter("Book__Id__eq",book.Id).Filter("content","").All(&toExportChapterList)
+	return err,toExportChapterList,book.ContentRules
+}
+//更新chapter的content字段
+func UpdateChapterContent(chapters []*Chapter) error{
+	remoteOrm := orm.NewOrm()
+	remoteOrm.Using("remote")
+	var err error
+	p, err := remoteOrm.Raw("UPDATE chapter SET content = ? WHERE id = ?").Prepare()
+	if err!=nil{
+		beego.Error(err)
+		p.Close()
+		return err
+	}
+	for _,chapter:=range chapters{
+		if chapter.Content!=""{
+			_, err := p.Exec(chapter.Content, chapter.Id)
+			if err!=nil{
+				beego.Error(err)
+			}
+		}
+	}
+	p.Close()
+	return nil
+}
 
 func init() {
 	orm.RegisterModel(new(Book), new(Chapter))

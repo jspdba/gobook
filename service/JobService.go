@@ -29,7 +29,7 @@ func GetChapterContent(selector string,chapters  []*models.Chapter,threadsCount 
 			if i==threadsCount-1{
 				beego.Info(start,":-",lenChapters)
 				go Download(&wg,chapters[start:],selector)
-				break;
+				break
 			}else{
 				beego.Info(start,":",end,lenChapters)
 				go Download(&wg,chapters[start:end],selector)
