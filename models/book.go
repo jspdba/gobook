@@ -501,13 +501,21 @@ func Export(id string) error{
 }
 //获取id=book.id内容为空的章节
 func FindEmptyChapters(id string) (error,[]*Chapter,string){
+
+	localOrm := orm.NewOrm()
+	localOrm.Using("default")
+
 	remoteOrm := orm.NewOrm()
 	remoteOrm.Using("remote")
 
 	var book Book
 	var toExportChapterList []*Chapter
+	err:=localOrm.QueryTable("book").Filter("Id",id).One(&book)
 
-	err:=remoteOrm.QueryTable("book").Filter("Id",id).One(&book)
+	if err!=nil{
+		return err,toExportChapterList,""
+	}
+	err=remoteOrm.QueryTable("book").Filter("Name",book.Name).One(&book)
 
 	if err!=nil{
 		return err,toExportChapterList,""
