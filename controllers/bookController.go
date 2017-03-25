@@ -180,8 +180,9 @@ func (this *BookController) LocalUpdate() {
 				content:=service.GetContent(chapter.Url,rule)
 				chapter.Content=content
 			}*/
-
+			beego.Info("<<<<<<<<<<<<<<<<<")
 			models.UpdateChapterContent(chapters)
+			beego.Info(">>>>>>>>>>>>>>>>>")
 		})()
 		jsonMap["code"]=0
 		jsonMap["msg"]="ok"
