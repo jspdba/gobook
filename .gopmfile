@@ -1,0 +1,16 @@
+[target]
+path = gobook
+
+[deps]
+github.com/PuerkitoBio/goquery = 
+github.com/astaxie/beego = 
+github.com/fatih/color = 
+github.com/go-sql-driver/mysql = 
+github.com/henrylee2cn/mahonia = 
+github.com/jakecoffman/cron = 
+github.com/juju/persistent-cookiejar = 
+github.com/sluu99/uuid = 
+
+[res]
+include = views|static|conf
+
