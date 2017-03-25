@@ -468,7 +468,7 @@ func Export(id string) error{
 
 	//增加远程数据
 	var remoteChapterOfMaxIndex Chapter
-	err = remoteOrm.Raw("SELECT max(index) index FROM user WHERE book_id = ?", remoteBook.Id).QueryRow(&remoteChapterOfMaxIndex)
+	err = remoteOrm.Raw("SELECT MAX(`index`) as `index` FROM chapter WHERE book_id = ?", remoteBook.Id).QueryRow(&remoteChapterOfMaxIndex)
 
 	if err!=nil{
 		beego.Error(err)
