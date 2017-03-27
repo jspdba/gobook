@@ -38,7 +38,7 @@
 ## gopm 部分包需要用gopm下载 
     go get -u github.com/gpmgo/gopm
 1. gopm 安装：
->这个十分简单只需一条命令就可以了：
+>这个十分简单只需一go条命令就可以了：
     go get -u github.com/gpmgo/gopm
     
 2. 使用 gopm安装需要的包

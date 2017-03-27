@@ -2,6 +2,7 @@
 path = gobook
 
 [deps]
+github.com/beego/bee =
 github.com/PuerkitoBio/goquery = 
 github.com/astaxie/beego = 
 github.com/fatih/color = 

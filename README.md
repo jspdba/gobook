@@ -12,3 +12,5 @@ https://github.com/jspdba/gobook.git
 ## or push an existing repository from the command line
     git remote add origin https://github.com/jspdba/gobook.git
     git push -u origin master
+##GOPATH
+   D:\zhongliang\go\gobook
