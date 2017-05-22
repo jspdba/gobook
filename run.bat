@@ -1,2 +1,3 @@
-D:\go\bin\bee run gobook
+D:\zhongliang\go\bin\bee run gobook
 pause 
+

@@ -13,4 +13,4 @@ https://github.com/jspdba/gobook.git
     git remote add origin https://github.com/jspdba/gobook.git
     git push -u origin master
 ##GOPATH
-   D:\zhongliang\go\gobook
+   D:\zhongliang\go

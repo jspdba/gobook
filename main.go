@@ -32,8 +32,8 @@ func init() {
 	localUrl:=beego.AppConfig.String("mysqluser") + ":" + beego.AppConfig.String("mysqlpass") + "@/beego?charset=utf8"
 	remoteUrl:=beego.AppConfig.String("remote.mysqluser") + ":" + beego.AppConfig.String("remote.mysqlpass") + "@tcp("+beego.AppConfig.String("remote.host")+":"+beego.AppConfig.String("remote.port")+")/beego?charset=utf8"
 
-	orm.RegisterDataBase("default", "mysql", localUrl, 30)
-	orm.RegisterDataBase("remote", "mysql", remoteUrl, 1)
+	orm.RegisterDataBase("default", "mysql", localUrl, 30,30)
+	orm.RegisterDataBase("remote", "mysql", remoteUrl, 1,10)
 	orm.RunSyncdb("default", false, true)
 	//切换数据库
 	//o1 := orm.NewOrm()
