@@ -161,29 +161,41 @@ func ChapterInsertMulti(chapters []*Chapter){
 	//分批插入，每次max
 	max:=1000
 	length:=len(chapters)
+
 	if length>0{
 		if length<=max{
+			o.Begin()
 			if _, err :=o.InsertMulti(length,chapters);err!=nil{
 				beego.Error(err)
+				o.Rollback()
 			}
+			o.Commit()
 		}else{
 			itemcount:=length/max
 			for i,start,end:=0,0,max;i<itemcount;i++{
 				cha:=chapters[start:end]
+				o.Begin()
 				if _, err :=o.InsertMulti(len(cha),cha);err!=nil{
 					beego.Error(err)
+					o.Rollback()
 				}
+				o.Commit()
 				start=end
 				end+=max
 			}
 			if(length%max!=0){
 				cha:=chapters[length-length%max:]
+
+				o.Begin()
 				if _, err :=o.InsertMulti(len(cha),cha);err!=nil{
 					beego.Error(err)
+					o.Rollback()
 				}
+				o.Commit()
 			}
 		}
 	}
+
 
 }
 
