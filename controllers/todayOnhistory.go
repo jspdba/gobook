@@ -37,7 +37,7 @@ func(this *TodayOnhistory) QueryEvent() {
 	this.Data["json"] = data
 	this.ServeJSON()
 }
-// @router /todayOnhistory/QueryDetail [get]
+// @router /todayOnhistory/queryDetail [get]
 func(this *TodayOnhistory) QueryDetail() {
 	key:=beego.AppConfig.String("API_KEY")
 	queryDetailUrl:=beego.AppConfig.String("url.queryDetail")
