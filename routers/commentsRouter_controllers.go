@@ -317,7 +317,7 @@ func init() {
 	beego.GlobalControllerRouter["gobook/controllers:TodayOnhistory"] = append(beego.GlobalControllerRouter["gobook/controllers:TodayOnhistory"],
 		beego.ControllerComments{
 			Method: "QueryDetail",
-			Router: `/todayOnhistory/QueryDetail`,
+			Router: `/todayOnhistory/queryDetail`,
 			AllowHTTPMethods: []string{"get"},
 			Params: nil})
 
