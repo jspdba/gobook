@@ -14,4 +14,5 @@ func init() {
 	beego.Include(&controllers.ChapterLogController{})
 	beego.Include(&controllers.QrCodeController{})
 	beego.Include(&controllers.JobController{})
+	beego.Include(&controllers.TodayOnhistory{})
 }

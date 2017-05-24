@@ -307,6 +307,20 @@ func init() {
 			AllowHTTPMethods: []string{"get"},
 			Params: nil})
 
+	beego.GlobalControllerRouter["gobook/controllers:TodayOnhistory"] = append(beego.GlobalControllerRouter["gobook/controllers:TodayOnhistory"],
+		beego.ControllerComments{
+			Method: "QueryEvent",
+			Router: `/todayOnhistory/queryEvent`,
+			AllowHTTPMethods: []string{"get"},
+			Params: nil})
+
+	beego.GlobalControllerRouter["gobook/controllers:TodayOnhistory"] = append(beego.GlobalControllerRouter["gobook/controllers:TodayOnhistory"],
+		beego.ControllerComments{
+			Method: "QueryDetail",
+			Router: `/todayOnhistory/QueryDetail`,
+			AllowHTTPMethods: []string{"get"},
+			Params: nil})
+
 	beego.GlobalControllerRouter["gobook/controllers:UserController"] = append(beego.GlobalControllerRouter["gobook/controllers:UserController"],
 		beego.ControllerComments{
 			Method: "LoginPage",
