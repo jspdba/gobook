@@ -112,7 +112,7 @@ func ImportRemoteLinkTable(){
 	qs2 := o2.QueryTable("link")
 	qs2.RelatedSel().All(&remoteLinks)
 
-	result := make([]*Link,0)
+	result := [] *Link{}
 
 	for _,v1:=range remoteLinks{
 		have:=false
@@ -125,9 +125,6 @@ func ImportRemoteLinkTable(){
 
 		if !have{
 			o2.LoadRelated(v1,"tags")
-			if strings.Contains(v1.Title,"用 Django"){
-				beego.Info(v1.Tags[0].Name)
-			}
 			v1.Id=0
 			for _,t:=range v1.Tags{
 				t.Id=0
@@ -140,6 +137,7 @@ func ImportRemoteLinkTable(){
 
 				beego.Info(t)
 			}
+			beego.Info(v1)
 			result = append(result,v1)
 		}
 	}
@@ -152,11 +150,15 @@ func ImportRemoteLinkTable(){
 			if _, id, err := o1.ReadOrCreate(v, "Url"); err == nil {
 				v.Id = int(id)
 				m2m := o1.QueryM2M(v, "Tags")
-				_, err1 := m2m.Add(v.Tags)
-				if err1!=nil{
-					beego.Error(err1)
-					continue
+				beego.Info(v.Tags)
+				if len(v.Tags)>0{
+					_, err1 := m2m.Add(v.Tags)
+					if err1!=nil{
+						beego.Error(err1)
+						continue
+					}
 				}
+
 			} else {
 				beego.Error(err)
 			}
@@ -165,6 +167,7 @@ func ImportRemoteLinkTable(){
 
 
 	}
+	_ = result
 }
 
 func init() {
