@@ -249,7 +249,7 @@ func (this *ChapterController) ListJson() {
 		list := page.List.([] models.Chapter)
 		list2:=make([] models.Chapter,0)
 		for _,c :=  range list{
-			c.Content = nil
+			c.Content = ""
 			c.Book = nil
 			list2 = append(list2,c)
 		}
