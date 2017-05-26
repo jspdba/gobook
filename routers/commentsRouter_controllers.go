@@ -57,6 +57,13 @@ func init() {
 
 	beego.GlobalControllerRouter["gobook/controllers:BookController"] = append(beego.GlobalControllerRouter["gobook/controllers:BookController"],
 		beego.ControllerComments{
+			Method: "ListJson",
+			Router: `/book/json/list`,
+			AllowHTTPMethods: []string{"get"},
+			Params: nil})
+
+	beego.GlobalControllerRouter["gobook/controllers:BookController"] = append(beego.GlobalControllerRouter["gobook/controllers:BookController"],
+		beego.ControllerComments{
 			Method: "Export",
 			Router: `/book/export/:id([0-9]+)`,
 			AllowHTTPMethods: []string{"get"},
@@ -80,6 +87,13 @@ func init() {
 		beego.ControllerComments{
 			Method: "Detail",
 			Router: `/chapter/detail/:id([0-9]{0,})`,
+			AllowHTTPMethods: []string{"get"},
+			Params: nil})
+
+	beego.GlobalControllerRouter["gobook/controllers:ChapterController"] = append(beego.GlobalControllerRouter["gobook/controllers:ChapterController"],
+		beego.ControllerComments{
+			Method: "DetailJson",
+			Router: `/chapter/json/detail/:id([0-9]{0,})`,
 			AllowHTTPMethods: []string{"get"},
 			Params: nil})
 
@@ -122,6 +136,13 @@ func init() {
 		beego.ControllerComments{
 			Method: "List",
 			Router: `/chapter/list/:id([0-9]{0,})`,
+			AllowHTTPMethods: []string{"get"},
+			Params: nil})
+
+	beego.GlobalControllerRouter["gobook/controllers:ChapterController"] = append(beego.GlobalControllerRouter["gobook/controllers:ChapterController"],
+		beego.ControllerComments{
+			Method: "ListJson",
+			Router: `/chapter/json/list/:id([0-9]{0,})`,
 			AllowHTTPMethods: []string{"get"},
 			Params: nil})
 

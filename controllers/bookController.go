@@ -20,6 +20,7 @@ func (this *BookController) URLMapping() {
 	this.Mapping("/book/save", this.SaveOrUpdate)
 	this.Mapping("/book/delete/:id([0-9]+)", this.Delete)
 	this.Mapping("/book/list", this.List)
+	this.Mapping("/book/json/list", this.ListJson)
 	this.Mapping("/book/taskUpdate/:id([0-9]{0,})", this.TaskUpdate)
 	this.Mapping("/book/url/info", this.UrlInfo)
 	this.Mapping("/book/search", this.Search)
@@ -137,6 +138,22 @@ func (this *BookController) List() {
 	this.Data["runmode"] = beego.AppConfig.String("runmode")
 	this.Data["page"] = models.BookPage(page.PageNo,page.PageSize)
 	this.TplName = "book/list.tpl"
+}
+// @router /book/json/list
+func (this *BookController) ListJson() {
+	jsonMap:=map[string]interface{}{
+		"code":0,
+		"msg":"",
+	}
+
+	page:=utils.Page{PageNo:1,PageSize:20}
+	if err := this.ParseForm(&page); err != nil {
+		beego.Error(err)
+	}
+
+	jsonMap["page"] = models.BookPage(page.PageNo,page.PageSize)
+	this.Data["json"] = jsonMap
+	this.ServeJSON()
 }
 
 // @router /book/export/:id([0-9]+)

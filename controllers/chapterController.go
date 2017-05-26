@@ -15,12 +15,16 @@ type ChapterController struct {
 func (this *ChapterController) URLMapping() {
 	this.Mapping("/chapter/edit/:id([0-9]+)", this.Edit)
 	this.Mapping("/chapter/detail/:id([0-9]+)", this.Detail)
+	this.Mapping("/chapter/json/detail/:id([0-9]+)", this.DetailJson)
 	this.Mapping("/chapter/next/:id([0-9]{0,})", this.Next)
+	this.Mapping("/chapter/json/next/:id([0-9]{0,})", this.NextJson)
 	this.Mapping("/chapter/pre/:id([0-9]{0,})", this.Pre)
+	this.Mapping("/chapter/json/pre/:id([0-9]{0,})", this.PreJson)
 	this.Mapping("/chapter/save", this.SaveOrUpdate)
 	this.Mapping("/chapter/delete/:id([0-9]+)", this.Delete)
 	this.Mapping("/chapter/deletebook/:id([0-9]+)", this.DeleteBook)
 	this.Mapping("/chapter/list/:id([0-9]+)", this.List)
+	this.Mapping("/chapter/json/list/:id([0-9]+)", this.ListJson)
 	this.Mapping("/chapter/new/:id([0-9]{0,})", this.HasNewChapter)
 	this.Mapping("/chapter/list/:tag(\\w+)/:id([0-9]{0,})", this.ListByLog)
 	this.Mapping("/chapter/title/:id([0-9]{0,})", this.FindByTitle)
@@ -48,15 +52,6 @@ func (this *ChapterController) Detail() {
 	id:=this.Ctx.Input.Param(":id")
 	obj:= models.Chapter{}
 	var next,pre models.Chapter
-	/*if id!=""{
-		if i,err:=strconv.ParseInt(id, 10, 64); err==nil{
-			ok,entity:=models.FindChapterById(i)
-			beego.Info(entity)
-			if ok{
-				obj=entity
-			}
-		}
-	}*/
 
 	if id!=""{
 		if i,err:=strconv.Atoi(id); err==nil{
@@ -77,6 +72,35 @@ func (this *ChapterController) Detail() {
 	this.Data["pre"] = pre
 	this.TplName = "chapter/detail.tpl"
 }
+
+// @router /chapter/json/detail/:id([0-9]{0,}) [get]
+func (this *ChapterController) DetailJson() {
+	id:=this.Ctx.Input.Param(":id")
+	obj:= models.Chapter{}
+
+	jsonMap:=map[string]interface{}{
+		"code":-1,
+		"msg":"error",
+	}
+
+	if id!=""{
+		if i,err:=strconv.Atoi(id); err==nil{
+			obj.Id=i
+			ok,entity:=models.FindChapter(&obj)
+			if ok {
+				obj = entity
+
+				jsonMap["code"]=0
+				jsonMap["msg"]=""
+				jsonMap["data"]=obj
+			}
+		}
+	}
+
+	this.Data["json"]=jsonMap
+	this.ServeJSON()
+}
+
 // @router /chapter/next/:id([0-9]{0,}) [get]
 func (this *ChapterController) Next() {
 	id:=this.Ctx.Input.Param(":id")
@@ -104,6 +128,45 @@ func (this *ChapterController) Pre() {
 	}
 	this.Data["entity"] = obj
 	this.TplName = "chapter/detail.tpl"
+}
+// @router /chapter/json/next/:id([0-9]{0,}) [get]
+func (this *ChapterController) NextJson() {
+	id:=this.Ctx.Input.Param(":id")
+	obj:= models.Chapter{}
+	jsonMap:=map[string]interface{}{
+		"code":0,
+		"msg":"",
+	}
+	if id!=""{
+		if i,err:=strconv.Atoi(id); err==nil{
+			obj.Id=i
+			entity:=models.ChapterNext(&obj)
+			obj=entity
+			jsonMap["data"]=obj
+		}
+	}
+	this.Data["json"] = jsonMap
+	this.ServeJSON()
+}
+// @router /chapter/json/pre/:id([0-9]{0,}) [get]
+func (this *ChapterController) PreJson() {
+	id:=this.Ctx.Input.Param(":id")
+	obj:= models.Chapter{}
+
+	jsonMap:=map[string]interface{}{
+		"code":0,
+		"msg":"",
+	}
+	if id!=""{
+		if i,err:=strconv.Atoi(id); err==nil{
+			obj.Id=i
+			entity:=models.ChapterPre(&obj)
+			obj=entity
+			jsonMap["data"] = obj
+		}
+	}
+	this.Data["json"] = jsonMap
+	this.ServeJSON()
 }
 
 // @router /chapter/save [post]
@@ -155,6 +218,47 @@ func (this *ChapterController) List() {
 	}
 	this.Data["page"] = models.ChapterPage(page.PageNo,page.PageSize,bookId)
 	this.TplName = "chapter/list.tpl"
+}
+
+// @router /chapter/json/list/:id([0-9]{0,}) [get]
+func (this *ChapterController) ListJson() {
+	page:=utils.Page{PageNo:1,PageSize:20}
+	if err := this.ParseForm(&page); err != nil {
+		beego.Error(err)
+	}
+
+
+	jsonMap:=map[string]interface{}{
+		"code":0,
+		"msg":"",
+	}
+
+	id:=this.Ctx.Input.Param(":id")
+	bookId:=-1
+	if id!="" {
+		if i, err := strconv.Atoi(id); err == nil {
+			bookId=i
+		}
+	}else{
+		bookId=0
+	}
+
+	page = models.ChapterPage(page.PageNo,page.PageSize,bookId)
+
+	if page.TotalCount>0{
+		list := page.List.([] models.Chapter)
+		list2:=make([] models.Chapter,0)
+		for _,c :=  range list{
+			c.Content = nil
+			c.Book = nil
+			list2 = append(list2,c)
+		}
+		page.List = list2
+	}
+
+	jsonMap["page"] = page
+	this.Data["json"] = jsonMap
+	this.ServeJSON()
 }
 
 // @router /chapter/new/:id([0-9]{0,}) [get]
