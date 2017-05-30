@@ -88,6 +88,7 @@ func (this *ChapterController) DetailJson() {
 			obj.Id=i
 			ok,entity:=models.FindChapter(&obj)
 			if ok {
+				entity.Book=nil
 				obj = entity
 
 				jsonMap["code"]=0
