@@ -141,9 +141,12 @@ func (this *ChapterController) NextJson() {
 	if id!=""{
 		if i,err:=strconv.Atoi(id); err==nil{
 			obj.Id=i
-			entity:=models.ChapterNext(&obj)
-			obj=entity
-			jsonMap["data"]=obj
+			ok,entity:=models.FindChapter(&obj)
+			if ok{
+				jsonMap["data"]=models.ChapterNext(&entity)
+			}else{
+				jsonMap["data"]=nil
+			}
 		}
 	}
 	this.Data["json"] = jsonMap
@@ -161,9 +164,12 @@ func (this *ChapterController) PreJson() {
 	if id!=""{
 		if i,err:=strconv.Atoi(id); err==nil{
 			obj.Id=i
-			entity:=models.ChapterPre(&obj)
-			obj=entity
-			jsonMap["data"] = obj
+			ok,entity:=models.FindChapter(&obj)
+			if ok{
+				jsonMap["data"]=models.ChapterPre(&entity)
+			}else{
+				jsonMap["data"]=nil
+			}
 		}
 	}
 	this.Data["json"] = jsonMap
