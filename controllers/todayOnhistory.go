@@ -5,6 +5,7 @@ import (
 	"gobook/service"
 	"net/url"
 	"encoding/json"
+	"gobook/models"
 )
 
 type TodayOnhistory struct {
@@ -22,18 +23,33 @@ func(this *TodayOnhistory) QueryEvent() {
 	queryEventUrl:=beego.AppConfig.String("url.queryEvent")
 	date:=this.GetString("date")
 
-	u, _ := url.Parse(queryEventUrl)
+	//先查询数据库，库里有？返回:入库+返回
 
-	q := u.Query()
-	q.Set("key", key)
-	q.Set("date", date)
-	b,_:= service.Get(queryEventUrl,&q)
+	today:=new(models.TodayOnHistory)
+	today.Key=date
+	today.Content = models.FindByKey(date)
+
 
 	data:=new(map[string]interface{})
-	err:=json.Unmarshal(b,data)
-	if err!=nil{
-		beego.Error(err)
+
+	var err error
+	if(today.Content==""){
+		u, _ := url.Parse(queryEventUrl)
+
+		q := u.Query()
+		q.Set("key", key)
+		q.Set("date", date)
+		b,_:= service.Get(queryEventUrl,&q)
+
+		today.Content = string(b)
+		models.ReadOrCreate(today)
 	}
+
+	err = json.Unmarshal([]byte(today.Content),data)
+	if err!=nil{
+		beego.Error(err.Error())
+	}
+
 	this.Data["json"] = data
 	this.ServeJSON()
 }
@@ -43,16 +59,31 @@ func(this *TodayOnhistory) QueryDetail() {
 	queryDetailUrl:=beego.AppConfig.String("url.queryDetail")
 	e_id:=this.GetString("e_id")
 
-	u, _ := url.Parse(queryDetailUrl)
-	q := u.Query()
-	q.Set("key", key)
-	q.Set("e_id", e_id)
-	b,_ := service.Get(queryDetailUrl,&q)
+
+	today:=new(models.TodayOnHistory)
+	today.Key=e_id
+	today.Content = models.FindByKey(today.Key)
+
+
 	data:=new(map[string]interface{})
-	err:=json.Unmarshal(b,data)
-	if err!=nil{
-		beego.Error(err)
+
+	var err error
+	if(today.Content==""){
+		u, _ := url.Parse(queryDetailUrl)
+		q := u.Query()
+		q.Set("key", key)
+		q.Set("e_id", e_id)
+		b,_ := service.Get(queryDetailUrl,&q)
+
+		today.Content = string(b)
+		models.ReadOrCreate(today)
 	}
+
+	err = json.Unmarshal([]byte(today.Content),data)
+	if err!=nil{
+		beego.Error(err.Error())
+	}
+
 	this.Data["json"] = data
 	this.ServeJSON()
 }
