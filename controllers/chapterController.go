@@ -143,8 +143,9 @@ func (this *ChapterController) NextJson() {
 			obj.Id=i
 			ok,entity:=models.FindChapter(&obj)
 			if ok{
+				entity=models.ChapterNext(&entity)
 				entity.Book=nil
-				jsonMap["data"]=models.ChapterNext(&entity)
+				jsonMap["data"] = entity
 			}else{
 				jsonMap["data"]=nil
 			}
@@ -167,8 +168,9 @@ func (this *ChapterController) PreJson() {
 			obj.Id=i
 			ok,entity:=models.FindChapter(&obj)
 			if ok{
+				entity=models.ChapterPre(&entity)
 				entity.Book=nil
-				jsonMap["data"]=models.ChapterPre(&entity)
+				jsonMap["data"] = entity
 			}else{
 				jsonMap["data"]=nil
 			}
