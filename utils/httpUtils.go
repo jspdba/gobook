@@ -17,15 +17,7 @@ type user struct {
 	cookieStore string
 }
 
-func login(url string){
-
-}
-
-func logout(url string){
-
-}
-
-func httpGet(url string) (content string){
+func HttpGet(url string) (content string){
 	client := &http.Client{
 		Transport: &http.Transport{
 			Dial: func(netw, addr string) (net.Conn, error) {
@@ -57,7 +49,7 @@ func httpGet(url string) (content string){
 	return
 }
 
-func httpPost(url string) (content string){
+func HttpPost(url string) (content string){
 
 	client := &http.Client{
 		Transport: &http.Transport{
@@ -92,7 +84,7 @@ func httpPost(url string) (content string){
 
 	return
 }
-func httpPostForm(url string, data url.Values) (content string){
+func HttpPostForm(url string, data url.Values) (content string){
 	client := &http.Client{
 		Transport: &http.Transport{
 			Dial: func(netw, addr string) (net.Conn, error) {
@@ -125,7 +117,7 @@ func httpPostForm(url string, data url.Values) (content string){
 
 }
 
-func httpDoPost(url,cookies string) (content string){
+func HttpDoPost(url,cookies string) (content string){
 	client := &http.Client{
 		Transport: &http.Transport{
 			Dial: func(netw, addr string) (net.Conn, error) {

@@ -113,6 +113,20 @@ func init() {
 
 	beego.GlobalControllerRouter["gobook/controllers:ChapterController"] = append(beego.GlobalControllerRouter["gobook/controllers:ChapterController"],
 		beego.ControllerComments{
+			Method: "NextJson",
+			Router: `/chapter/json/next/:id([0-9]{0,})`,
+			AllowHTTPMethods: []string{"get"},
+			Params: nil})
+
+	beego.GlobalControllerRouter["gobook/controllers:ChapterController"] = append(beego.GlobalControllerRouter["gobook/controllers:ChapterController"],
+		beego.ControllerComments{
+			Method: "PreJson",
+			Router: `/chapter/json/pre/:id([0-9]{0,})`,
+			AllowHTTPMethods: []string{"get"},
+			Params: nil})
+
+	beego.GlobalControllerRouter["gobook/controllers:ChapterController"] = append(beego.GlobalControllerRouter["gobook/controllers:ChapterController"],
+		beego.ControllerComments{
 			Method: "SaveOrUpdate",
 			Router: `/chapter/save`,
 			AllowHTTPMethods: []string{"post"},
