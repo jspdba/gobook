@@ -398,4 +398,18 @@ func init() {
 			AllowHTTPMethods: []string{"get"},
 			Params: nil})
 
+	beego.GlobalControllerRouter["gobook/controllers:WxAppController"] = append(beego.GlobalControllerRouter["gobook/controllers:WxAppController"],
+		beego.ControllerComments{
+			Method: "UserInfo",
+			Router: `/wxapp/userInfo`,
+			AllowHTTPMethods: []string{"get"},
+			Params: nil})
+
+	beego.GlobalControllerRouter["gobook/controllers:WxAppController"] = append(beego.GlobalControllerRouter["gobook/controllers:WxAppController"],
+		beego.ControllerComments{
+			Method: "Login",
+			Router: `/wxapp/login`,
+			AllowHTTPMethods: []string{"get"},
+			Params: nil})
+
 }

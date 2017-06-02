@@ -43,7 +43,7 @@ type ErrInfo struct {
 func GetWxSessionKey(code string) (ws WxSesstion, err error) {
 	wxConfig := new(WxConfig)
 	wxConfig.AppId=beego.AppConfig.String("AppId")
-	wxConfig.AppId=beego.AppConfig.String("AppSecret")
+	wxConfig.AppSecret=beego.AppConfig.String("AppSecret")
 
 	uri := fmt.Sprintf("https://api.weixin.qq.com/sns/jscode2session?"+
 		"appid=%s&secret=%s&js_code=%s&grant_type=authorization_code",

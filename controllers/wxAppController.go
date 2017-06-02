@@ -3,7 +3,6 @@ package controllers
 import (
 	"github.com/astaxie/beego"
 	"gobook/models"
-	"strings"
 	"gobook/wxapp"
 )
 
@@ -39,7 +38,7 @@ func (this *WxAppController) UserInfo() {
 	this.ServeJSON()
 }
 
-// @router /wxapp/userInfo [get]
+// @router /wxapp/login [get]
 func (this *WxAppController) Login() {
 	id:=this.Ctx.Input.Param(":id")
 	if id!=""{
