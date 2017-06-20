@@ -7,6 +7,7 @@ import (
 	_ "github.com/go-sql-driver/mysql" // import your used driver
 	"github.com/astaxie/beego"
 	"gobook/service"
+	"runtime"
 )
 
 func init() {
@@ -45,7 +46,10 @@ func main() {
 
 	//更新数据库job为初始状态
 	service.ResetJob()
-
+	//开启linux配置任务
+	if "windows"!=runtime.GOOS{
+		service.ListShellJobs()
+	}
 	/*beego.InsertFilter("*", beego.BeforeRouter,cors.Allow(&cors.Options{
 		AllowOrigins: []string{"https:/*//*.foo.com"},
 		AllowMethods: []string{"PUT", "PATCH"},
@@ -61,6 +65,7 @@ func main() {
 		ExposeHeaders: []string{"Content-Length"},
 		AllowCredentials: true,
 	}))*/
+
 	beego.Run()
 	//orm.RunCommand()
 }

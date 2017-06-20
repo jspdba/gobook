@@ -1,0 +1,7 @@
+[{
+  "id":1,
+  "name":"bak_mysql",
+  "description":"mysql back",
+  "cron":"@midnight",
+  "cmd":"mysqldump -u **** -p**** beego link> /opt/mysql_bak/link_{time}.sql"
+}]
