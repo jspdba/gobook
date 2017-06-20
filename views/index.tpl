@@ -50,6 +50,14 @@
                         <a class="btn btn-primary btn-large btn-block" href="{{urlfor "JobController.List"}}">进入</a>
                     </div>
                 </div>
+                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                    <div class="tile">
+                        <img src="/static/Flat-UI/img/icons/svg/ribbon.svg" alt="任务" class="tile-image big-illustration">
+                        <h3 class="tile-title">shell任务</h3>
+                        <p></p>
+                        <a class="btn btn-primary btn-large btn-block" href="{{urlfor "ShellJobController.List"}}">进入</a>
+                    </div>
+                </div>
             </div>
         </div>
 
