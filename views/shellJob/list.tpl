@@ -14,7 +14,7 @@
         <div class="panel-body">
             {{range .jobs}}
             <div class="row">
-                <div class="col-md-5 col-sm-5">{{Name}}:{{Cron}}</div>
+                <div class="col-md-5 col-sm-5">{{.Name}}:{{.Cron}}</div>
             </div>
             {{end}}
             <ul id="page"></ul>
