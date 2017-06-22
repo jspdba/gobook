@@ -17,7 +17,7 @@
     <![endif]-->
     <style>
         body {
-            min-height: 2000px;
+            /*min-height: 2000px;*/
             padding-top: 70px;
         }
     </style>

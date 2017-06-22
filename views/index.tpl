@@ -64,7 +64,7 @@
     </div>
 
 </div>
-
+{{template "common/footer.tpl"}}
 {{template "common/script.tpl"}}
 </body>
 </html>

@@ -6,7 +6,6 @@ import (
 	"path"
 	"gobook/models"
 	"github.com/robfig/cron"
-	"github.com/astaxie/beego"
 	"fmt"
 	"io/ioutil"
 	"os/exec"
@@ -23,7 +22,6 @@ func init() {
 	c := cron.New()
 
 	for _,shell :=range config{
-		beego.Info(shell)
 		c.AddFunc(shell.Cron, func() {
 			if shell.Cmd==""{
 				return
