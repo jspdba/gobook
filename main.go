@@ -49,6 +49,7 @@ func main() {
 	//开启linux配置任务
 	if "windows"!=runtime.GOOS{
 		service.ListShellJobs()
+		beego.Info("shell job started")
 	}
 	/*beego.InsertFilter("*", beego.BeforeRouter,cors.Allow(&cors.Options{
 		AllowOrigins: []string{"https:/*//*.foo.com"},

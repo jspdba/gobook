@@ -15,9 +15,6 @@ func (this *ShellJobController) URLMapping() {
 // @router /shell/job/list
 func(this *ShellJobController) List() {
 	jobs := service.ListShellJobs()
-	for _,job :=range jobs{
-		job.Cmd=""
-	}
 	this.Data["jobs"] = jobs
 	this.TplName = "shellJob/list.tpl"
 }
