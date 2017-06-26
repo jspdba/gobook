@@ -19,7 +19,7 @@ var (
 
 func init() {
 	LoadConfig("")
-	c := cron.New()
+	c := cron.NewWithLocation(time.FixedZone("Shanghai",800))
 
 	for _,shell :=range config{
 		c.AddFunc(shell.Cron, func() {
