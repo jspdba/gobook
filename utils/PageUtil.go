@@ -12,6 +12,14 @@ type Page struct {
 	Word       string
 }
 
+func PageUtil1(count int, pageNo int, pageSize int,key string, word string, list interface{}) Page {
+	tp := count / pageSize
+	if count%pageSize > 0 {
+		tp = count/pageSize + 1
+	}
+	return Page{PageNo: pageNo, PageSize: pageSize, TotalPage: tp, TotalCount: count, FirstPage: pageNo == 1, LastPage: pageNo == tp, Key:key, Word:word, List: list}
+}
+
 func PageUtil(count int, pageNo int, pageSize int, list interface{}) Page {
 	tp := count / pageSize
 	if count%pageSize > 0 {

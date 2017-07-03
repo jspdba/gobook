@@ -76,7 +76,7 @@ func (this *LinkController) List() {
 	if err := this.ParseForm(&page); err != nil {
 		beego.Error(err)
 	}
-	this.Data["page"] = models.LinkPage(page.PageNo,page.PageSize)
+	this.Data["page"] = models.LinkPage(page.PageNo,page.PageSize,page.Key,page.Word)
 	this.TplName = "link/list.tpl"
 }
 

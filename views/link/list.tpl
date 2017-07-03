@@ -7,6 +7,32 @@
 <div class="container">
     <div class="panel panel-primary">
         <div class="panel-heading">
+            <div class="title">搜索</div>
+        </div>
+        <div class="panel-body">
+            <form role="form" action="/link/list" method="get" class="form-horizontal">
+
+                <div class="form-group">
+                    <div class="col-sm-8">
+                        <input name="Word" id="Word" type="text" class="form-control" placeholder="请输入搜索内容" value="{{.page.Word}}">
+                    </div>
+                    <div class="col-sm-4">
+                        <select id="Key" name="Key" class="form-control">
+                            <option value="Title" {{if eq .page.Key ""}} selected="selected" {{end}}>默认</option>
+                            <option value="Title" {{if eq .page.Key "Title"}} selected="selected" {{end}}>标题</option>
+                            <option value="Url" {{if eq .page.Key "Url"}} selected="selected" {{end}}>链接</option>
+                            <option value="Description" {{if eq .page.Key "Description"}} selected="selected" {{end}}>描述</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">提交</button>
+                <button type="reset" class="btn btn-default">重置</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
             <div class="title"><a href="/link/edit" class="btn btn-primary">添加</a><a href="{{urlfor "LinkController.Import"}}" class="btn btn-primary">远程导入</a></div>
         </div>
         <div class="panel-body">
@@ -15,34 +41,34 @@
                 <div class="list-group-item">
                     <a href="{{.Url}}" title="{{.Description | html}}" target="_blank">{{.Title}}</a>
                     {{range .Tags}}
-                        <span class="tag badge pull-right">{{.Name}}</span>
+                    <span class="tag badge pull-right">{{.Name}}</span>
                     {{end}}
                 </div>
                 {{end}}
             </div>
-        <ul id="page"></ul>
+            <ul id="page"></ul>
         </div>
-</div>
-{{template "common/script.tpl"}}
-<script type="text/javascript" src="/static/js/bootstrap-paginator.min.js"></script>
-<script type="text/javascript">
-    $(function () {
-        var pageNo=parseInt("{{.page.PageNo}}");
-        pageNo=pageNo?pageNo:1
-        var totalPage=parseInt("{{.page.TotalPage}}");
-        totalPage=totalPage?totalPage:0
-        pageNo = pageNo>totalPage?totalPage:pageNo
+    </div>
+    {{template "common/script.tpl"}}
+    <script type="text/javascript" src="/static/js/bootstrap-paginator.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var pageNo=parseInt("{{.page.PageNo}}");
+            pageNo=pageNo?pageNo:1
+            var totalPage=parseInt("{{.page.TotalPage}}");
+            totalPage=totalPage?totalPage:0
+            pageNo = pageNo>totalPage?totalPage:pageNo
 
-        $("#page").bootstrapPaginator({
-            currentPage: pageNo,
-            totalPages: totalPage,
-            bootstrapMajorVersion: 3,
-            size: "small",
-            onPageClicked: function(e,originalEvent,type,page){
-                window.location.href = "/link/list?PageNo=" + page
-            }
+            $("#page").bootstrapPaginator({
+                currentPage: pageNo,
+                totalPages: totalPage,
+                bootstrapMajorVersion: 3,
+                size: "small",
+                onPageClicked: function(e,originalEvent,type,page){
+                    window.location.href = "/link/list?PageNo=" + page
+                }
+            });
         });
-    });
-</script>
+    </script>
 </body>
 </html>
