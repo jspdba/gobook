@@ -342,6 +342,13 @@ func init() {
 			AllowHTTPMethods: []string{"get"},
 			Params: nil})
 
+	beego.GlobalControllerRouter["gobook/controllers:ShellJobController"] = append(beego.GlobalControllerRouter["gobook/controllers:ShellJobController"],
+		beego.ControllerComments{
+			Method: "List",
+			Router: `/shell/job/list`,
+			AllowHTTPMethods: []string{"get"},
+			Params: nil})
+
 	beego.GlobalControllerRouter["gobook/controllers:TodayOnhistory"] = append(beego.GlobalControllerRouter["gobook/controllers:TodayOnhistory"],
 		beego.ControllerComments{
 			Method: "QueryEvent",
