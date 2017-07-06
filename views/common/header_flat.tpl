@@ -2,6 +2,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!--不允许goole机器人搜索-->
+    <meta name="robots" content="nofollow">
+    <meta name="googlebot" content="noindex">
+
     <!-- Loading Bootstrap -->
     <link href="/static/Flat-UI/dist/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
