@@ -202,6 +202,13 @@ func init() {
 			AllowHTTPMethods: []string{"get"},
 			Params: nil})
 
+	beego.GlobalControllerRouter["gobook/controllers:DecodeController"] = append(beego.GlobalControllerRouter["gobook/controllers:DecodeController"],
+		beego.ControllerComments{
+			Method: "Decode",
+			Router: `/str/decode`,
+			AllowHTTPMethods: []string{"get"},
+			Params: nil})
+
 	beego.GlobalControllerRouter["gobook/controllers:JobController"] = append(beego.GlobalControllerRouter["gobook/controllers:JobController"],
 		beego.ControllerComments{
 			Method: "Edit",

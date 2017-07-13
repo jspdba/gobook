@@ -17,4 +17,5 @@ func init() {
 	beego.Include(&controllers.TodayOnhistory{})
 	beego.Include(&controllers.WxAppController{})
 	beego.Include(&controllers.ShellJobController{})
+	beego.Include(&controllers.DecodeController{})
 }
