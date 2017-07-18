@@ -37,7 +37,12 @@ func Init() {
 				return
 			}
 			beego.Info("shell job begging..."+shell.Cmd)
-			cmd := exec.Command("/bin/sh", "-c", strings.Replace(shell.Cmd,"{time}",time.Now().Format("2006-01-02_15-04-05"),-1))
+
+			//time.FixedZone("Shanghai",800)
+			//timelocal := time.LoadLocation("Asia/Chongqing")
+			time.Local = time.FixedZone("CST", 3600*8)
+
+			cmd := exec.Command("/bin/sh", "-c", strings.Replace(shell.Cmd,"{time}",time.Now().Local().Format("2006-01-02_15-04-05"),-1))
 			stdout, err := cmd.StdoutPipe()
 			if err != nil {
 				fmt.Println("StdoutPipe: " + err.Error())
