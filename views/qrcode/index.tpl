@@ -53,6 +53,12 @@
 <script src="/static/js/toastr.min.js"></script>
 <script src="/static/js/jquery.qrcode.min.js"></script>
 <script>
+    $(function () {
+        var qrCacheUrl = Cookies.get("qr_url");
+        if(qrCacheUrl){
+            $("#url").html(qrCacheUrl);
+        }
+    });
     /**
      * 转换中文字符,生成二维码
      * @param str
@@ -80,9 +86,10 @@
 
     $("#make").bind("click",function () {
         var url=$("#url").val();
-        url && makeQrcode(url)
+        url && makeQrcode(url);
+        //cookie缓存
+        url && Cookies.set('qr_url', url, { expires: 30 });
     });
-
     function makeQrcode(url) {
         if(url){
             var str = toUtf8(url);
