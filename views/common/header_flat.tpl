@@ -5,6 +5,7 @@
     <!--不允许goole机器人搜索-->
     <meta name="robots" content="nofollow">
     <meta name="googlebot" content="noindex">
+    <meta name="baidu_union_verify" content="95ed23653b509526d3607d4882db57e5">
 
     <!-- Loading Bootstrap -->
     <link href="/static/Flat-UI/dist/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -25,5 +26,4 @@
             padding-top: 70px;
         }
     </style>
-    <meta name="baidu_union_verify" content="e86978a08118248411f0e72b46c4639c">
 </head>
