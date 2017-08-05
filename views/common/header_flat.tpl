@@ -25,4 +25,5 @@
             padding-top: 70px;
         }
     </style>
+    <meta name="baidu_union_verify" content="e86978a08118248411f0e72b46c4639c">
 </head>
