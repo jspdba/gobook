@@ -249,7 +249,7 @@ func ChapterPre(chapter *Chapter) Chapter{
 func BookDelete(book *Book) bool{
 	o := orm.NewOrm()
 	result:=false
-	if num, err := o.Delete(&book); err == nil {
+	if num, err := o.Delete(book); err == nil {
 		if num>0{
 			result=true
 		}
@@ -259,7 +259,7 @@ func BookDelete(book *Book) bool{
 func ChapterDelete(chapter *Chapter) bool{
 	o := orm.NewOrm()
 	result:=false
-	if num, err := o.Delete(&chapter); err == nil {
+	if num, err := o.Delete(chapter); err == nil {
 		if num>0{
 			result=true
 		}

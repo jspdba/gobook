@@ -79,11 +79,18 @@ func (this *BookController) Delete(){
 	id:=this.Ctx.Input.Param(":id")
 	if id!=""{
 		if i,err:=strconv.Atoi(id); err==nil{
-			book := models.Book{Id:i}
-			models.BookDelete(&book)
+			book := &models.Book{Id : i}
+			models.BookDelete(book)
 		}
 
 	}
+
+	jsonMap := map[string]interface{}{
+		"code":0,
+		"msg":"ok",
+	}
+	this.Data["json"] = jsonMap
+	this.ServeJSON()
 }
 // @router /book/url/info
 func (this *BookController) UrlInfo(){

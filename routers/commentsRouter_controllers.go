@@ -6,6 +6,13 @@ import (
 
 func init() {
 
+	beego.GlobalControllerRouter["gobook/controllers:AdminController"] = append(beego.GlobalControllerRouter["gobook/controllers:AdminController"],
+		beego.ControllerComments{
+			Method: "Index",
+			Router: `/admin/index`,
+			AllowHTTPMethods: []string{"get"},
+			Params: nil})
+
 	beego.GlobalControllerRouter["gobook/controllers:BookController"] = append(beego.GlobalControllerRouter["gobook/controllers:BookController"],
 		beego.ControllerComments{
 			Method: "Edit",

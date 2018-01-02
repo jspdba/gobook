@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"gobook/utils"
 	"gobook/service"
+	"gobook/filters"
 )
 
 type ChapterController struct {
@@ -192,6 +193,11 @@ func (this *ChapterController) SaveOrUpdate() {
 
 // @router /chapter/delete/:id([0-9]+)
 func (this *ChapterController) Delete(){
+	IsLogin, _ := filters.IsLogin(this.Ctx)
+	if !IsLogin {
+		this.Redirect("/login", 302)
+		return
+	}
 	id:=this.Ctx.Input.Param(":id")
 	if id!=""{
 		if i,err:=strconv.Atoi(id); err==nil{
@@ -203,6 +209,12 @@ func (this *ChapterController) Delete(){
 }
 // @router /chapter/deletebook/:id([0-9]+)
 func (this *ChapterController) DeleteBook(){
+	IsLogin, _ := filters.IsLogin(this.Ctx)
+	if !IsLogin {
+		this.Redirect("/login", 302)
+		return
+	}
+
 	id:=this.Ctx.Input.Param(":id")
 	if id!=""{
 		if i,err:=strconv.Atoi(id); err==nil{
