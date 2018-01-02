@@ -3,5 +3,5 @@
   "name":"bak_mysql",
   "description":"mysql back",
   "cron":"0 0 23 * * ?",
-  "cmd":"mysqldump -u root -pwuchaofei beego link> /opt/mysql_bak/link_{time}.sql"
+  "cmd":"mysqldump -u root -p*** beego link> /opt/mysql_bak/link_{time}.sql"
 }]
