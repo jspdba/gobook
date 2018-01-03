@@ -13,40 +13,22 @@
             </div>
         </div>
         <div class="panel-body">
-            {{range .page.List}}
             <div class="row">
-                <div class="col-md-5 col-sm-5"><a href="{{urlfor "BookController.Edit" ":id" .Id}}" title="{{.Name}}">{{.Name}}</a></div>
-                <div class="col-md-5 col-sm-5">
-                    <div class="btn-group">
-                        <a type="button" class="btn btn-primary toRead" link="{{urlfor "ChapterController.ListByLog" ":tag" "T_A_G" ":id" .Id}}">继续阅读</a>
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                            <span class="caret"></span>
-                            <span class="sr-only">切换下拉菜单</span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            {{if eq $.runmode "dev"}}
-                            <li>
-                                <a type="button" class="btn btn-primary export" link="{{urlfor "BookController.Export" ":id" .Id}}">上传章节</a>
-                            </li>
-                            <li>
-                                <a type="button" class="btn btn-primary" href="{{urlfor "ChapterController.DeleteBook" ":id" .Id}}">清空章节</a>
-                            </li>
-                            <li>
-                                <a type="button" class="btn btn-primary localUpdate" link="{{urlfor "BookController.LocalUpdate" ":id" .Id}}">远程更新空章节</a>
-                            </li>
-                            {{end}}
-                            <li>
-                                <a type="button" class="btn btn-primary" href="{{urlfor "ChapterController.List" ":id" .Id}}">章节列表</a>
-                            </li>
-                            <li>
-                                <a type="button" class="btn btn-info updateChapter" link="{{urlfor "BookController.TaskUpdate" ":id" .Id}}">更新章节</a>
-                            </li>
-                        </ul>
+                {{range .page.List}}
+                    <div class="col-sm-6 col-md-4">
+                        <div class="thumbnail">
+                            <div class="caption">
+                                <h3>{{.Name}} <div class="news" bid="{{.Id}}" data-url="{{urlfor "ChapterController.HasNewChapter" ":id" .Id}}"></div></h3>
+                                <p>
+                                    <a role="button" class="btn btn-info btn-block toRead" link="{{urlfor "ChapterController.ListByLog" ":tag" "T_A_G" ":id" .Id}}">继续阅读</a>
+                                    <a type="button" class="btn btn-info btn-block"  href="{{urlfor "ChapterController.List" ":id" .Id}}">章节列表</a>
+                                    <button type="button" class="btn btn-default  btn-block updateChapter" link="{{urlfor "BookController.TaskUpdate" ":id" .Id}}">更新章节</button>
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-2 col-sm-5 news" bid="{{.Id}}" data-url="{{urlfor "ChapterController.HasNewChapter" ":id" .Id}}"></div>
+                {{end}}
             </div>
-            {{end}}
             <ul id="page"></ul>
         </div>
     </div>

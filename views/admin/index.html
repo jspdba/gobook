@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html lang="zh-cn" xmlns="http://www.w3.org/1999/html">
 {{template "common/header_flat.tpl"}}
 <title>管理后台</title>
 <body>
@@ -23,11 +23,37 @@
                             <p>
                                 <a role="button" class="btn btn-info btn-block toRead" link="{{urlfor "ChapterController.ListByLog" ":tag" "T_A_G" ":id" .Id}}">继续阅读</a>
                                 <a type="button" class="btn btn-info btn-block"  href="{{urlfor "ChapterController.List" ":id" .Id}}">章节列表</a>
-                                <button type="button" class="btn btn-default btn-block export" link="{{urlfor "BookController.Export" ":id" .Id}}">上传章节</a>
-                                <a type="button" class="btn btn-default btn-block" href="{{urlfor "ChapterController.DeleteBook" ":id" .Id}}">清空章节</a>
-                                <button type="button" class="btn btn-default btn-block localUpdate" link="{{urlfor "BookController.LocalUpdate" ":id" .Id}}">远程更新空章节</a>
-                                <button type="button" class="btn btn-default btn-block btnDeleteBook" link="{{urlfor "BookController.Delete" ":id" .Id}}">删除</a>
-                                <button type="button" class="btn btn-default  btn-block updateChapter" link="{{urlfor "BookController.TaskUpdate" ":id" .Id}}">更新章节</a>
+
+                                <div class="btn-group">
+                                    <button class="btn btn-info" type="button">操作</button>
+                                    <button data-toggle="dropdown" class="btn btn-info dropdown-toggle" type="button">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul role="menu" class="dropdown-menu">
+                                        <li>
+                                            <button type="button" class="btn btn-default btn-block export" link="{{urlfor "BookController.Export" ":id" .Id}}">上传章节</button>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li>
+                                            <a type="button" class="btn btn-default btn-block" href="{{urlfor "ChapterController.DeleteBook" ":id" .Id}}">清空章节</a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li>
+                                            <button type="button" class="btn btn-default btn-block localUpdate" link="{{urlfor "BookController.LocalUpdate" ":id" .Id}}">远程更新空章节</button>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li>
+                                            <button type="button" class="btn btn-default btn-block btnDeleteBook" link="{{urlfor "BookController.Delete" ":id" .Id}}">删除</button>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li>
+                                            <button type="button" class="btn btn-default  btn-block updateChapter" link="{{urlfor "BookController.TaskUpdate" ":id" .Id}}">更新章节</button>
+                                        </li>
+                                    </ul>
+                                </div>
+
+
                             </p>
                         </div>
                     </div>
