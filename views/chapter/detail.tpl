@@ -3,7 +3,7 @@
 <style>
     body {
         padding-top: 70px;
-        padding-bottom: 50px;
+        padding-bottom: 150px;
     }
 </style>
 {{template "common/header_flat.tpl"}}
@@ -16,25 +16,39 @@
         {{str2html .entity.Content}}
     </p>
     <div class="navbar-fixed-bottom">
-        <div class="row">
-            <div class="col-md-12">
-                <form action="{{urlfor "ChapterController.FindByTitle" ":id" .entity.Book.Id}}" class="form-inline" role="form" method="post">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input name="Title" type="text" class="form-control" placeholder="搜索">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" type="submit">Go!</button>
-                                <a id="pre" type="button" class="btn btn-primary btn-sm" href="{{urlfor "ChapterController.Detail" ":id" .pre.Id}}">上一页</a>
-                                <a id="next" type="button" class="btn btn-info btn-sm" href="{{urlfor "ChapterController.Detail" ":id" .next.Id}}">下一页</a>
-                                <button id="er" type="button" class="btn btn-info btn-sm">二维码</button>
-                                <a id="update" type="button" class="btn btn-info btn-sm" href="{{urlfor "ChapterController.Update" ":id" .entity.Id}}">更新</a>
-                                <button id="addToFav" type="button" class="btn btn-info btn-sm" link="{{urlfor "LinkController.PostLink"}}">收藏</button>
-                            </span>
-                        </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="btn-group right" role="group">
+                <a id="pre" type="button" class="btn btn-primary btn-sm" href="{{urlfor "ChapterController.Detail" ":id" .pre.Id}}">上一页</a>
+                <a id="next" type="button" class="btn btn-info btn-sm" href="{{urlfor "ChapterController.Detail" ":id" .next.Id}}">下一页</a>
+                <button id="er" type="button" class="btn btn-info btn-sm">二维码</button>
+                <a id="update" type="button" class="btn btn-info btn-sm" href="{{urlfor "ChapterController.Update" ":id" .entity.Id}}">更新</a>
+                <button id="addToFav" type="button" class="btn btn-info btn-sm" link="{{urlfor "LinkController.PostLink"}}">收藏</button>
+            </div>
+            <!--<div class="input-group">
+                <span class="input-group-btn">
+                    <a id="pre" type="button" class="btn btn-primary btn-sm" href="{{urlfor "ChapterController.Detail" ":id" .pre.Id}}">上一页</a>
+                    <a id="next" type="button" class="btn btn-info btn-sm" href="{{urlfor "ChapterController.Detail" ":id" .next.Id}}">下一页</a>
+                    <button id="er" type="button" class="btn btn-info btn-sm">二维码</button>
+                    <a id="update" type="button" class="btn btn-info btn-sm" href="{{urlfor "ChapterController.Update" ":id" .entity.Id}}">更新</a>
+                    <button id="addToFav" type="button" class="btn btn-info btn-sm" link="{{urlfor "LinkController.PostLink"}}">收藏</button>
+                </span>
+            </div>-->
+        </div><!-- /.col-md-12 -->
+    </div><!-- /.row -->
+    <div class="row">
+        <div class="col-md-12">
+            <form action="{{urlfor "ChapterController.FindByTitle" ":id" .entity.Book.Id}}" class="form-inline" role="form" method="post">
+                    <div class="input-group">
+                        <input name="Title" type="text" class="form-control" placeholder="搜索">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit">Go!</button>
+                        </span>
                     </div>
-                </form>
-            </div><!-- /.col-md-12 -->
-        </div><!-- /.row -->
+            </form>
+        </div>
+    </div><!-- /.row -->
     </div>
 </div><!-- /.container -->
 
