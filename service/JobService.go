@@ -151,9 +151,10 @@ func GetUrlInfo(url string,selector string,limit int) []*models.Chapter{
 			//index:=getIndex(utils.Convert2Digit(utils.FindDigit(title)))
 
 			href, _ := contentSelection.Find("a").Attr("href")
-			if !strings.HasPrefix(href, "http") {
+			/*if !strings.HasPrefix(href, "http") {
 				href = getHost(url) + href
-			}
+			}*/
+			href = getFullUri(url, href)
 			chapter:=&models.Chapter{
 				Title:title,
 				//Index:index,
@@ -169,8 +170,18 @@ func GetUrlInfo(url string,selector string,limit int) []*models.Chapter{
 	}
 	return chapters
 }
+/** 获取完整路径 */
+func getFullUri(current string, path string) string {
+	if(strings.HasPrefix(path, "http") || strings.HasPrefix(path, "https")){
+		return path
+	}
+	return current + path
+}
 
 func getHost(url string) string{
+	/*url=strings.Replace(url,"http://","", -1)
+	url=url[0:strings.Index(url,"/")]
+	return "http://"+url*/
 	url=strings.Replace(url,"http://","", -1)
 	url=url[0:strings.Index(url,"/")]
 	return "http://"+url
