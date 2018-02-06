@@ -175,16 +175,30 @@ func getFullUri(current string, path string) string {
 	if(strings.HasPrefix(path, "http") || strings.HasPrefix(path, "https")){
 		return path
 	}
-	return current + path
+	if(!strings.HasPrefix(path,"/")){
+		return current + path
+	}
+	return getBaseUri(current) + path
 }
 
-func getHost(url string) string{
-	/*url=strings.Replace(url,"http://","", -1)
-	url=url[0:strings.Index(url,"/")]
-	return "http://"+url*/
-	url=strings.Replace(url,"http://","", -1)
-	url=url[0:strings.Index(url,"/")]
-	return "http://"+url
+func getBaseUri(url string) string{
+	n := len(url)
+	count:=0
+	var chars []byte
+
+	for i := 0; i < n; i++ {
+		chars = append(chars, url[i])
+		if(url[i] == '/'){
+			count++
+		}
+		if(count==3){
+			break
+		}
+	}
+	if(count<3){
+		chars = append(chars, '/')
+	}
+	return string(chars)
 }
 
 func getIndex(s string) int{
@@ -205,5 +219,5 @@ func getIndex(s string) int{
 }
 
 func ResetJob(){
-	models.ResetJob();
+	models.ResetJob()
 }
