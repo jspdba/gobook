@@ -17,14 +17,16 @@
     <row>
         <div class="table-responsive">
             <table class="table table-bordered">
-                <tr>
+                <!--<tr>
                     <td id="index1">http://dingying.m.womai.com</td>
                     <td>
                         <div class="btn-group pull-right">
                             <button type="button" class="use btn btn-primary" for="index1">使用</button>
                         </div>
                     </td>
-                </tr>
+                </tr>-->
+                <div class="links">
+                </div>
                 <tr>
                     <td>
                         <textarea autocomplete="off" data-provide="typeahead" name="url" id="url" placeholder="输入网址" class="form-control"></textarea>
@@ -53,10 +55,36 @@
 <script src="/static/js/toastr.min.js"></script>
 <script src="/static/js/jquery.qrcode.min.js"></script>
 <script>
+    function getCookies() {
+        var cookiesStr = Cookies.get("qr_url");
+        if(cookiesStr){
+            return cookiesStr.split(",");
+        }
+        return [];
+    }
     $(function () {
-        var qrCacheUrl = Cookies.get("qr_url");
-        if(qrCacheUrl){
-            $("#url").html(qrCacheUrl);
+        var links = getCookies();
+        if(links){
+            if(links.length==1){
+                $("#url").html(qrCacheUrl);
+            }else{
+                var html = "";
+                for(var i=0; i<links.length;i++){
+                    var ck = links[i];
+                    var div='<tr>' +
+                        '<td class="link_"' + i + '>'+ck+'</td>' +
+                        '<td>' +
+                        '<div class="btn-group pull-right">' +
+                        '<button type="button" class="use btn btn-primary" index="' + i + '">使用</button>' +
+                        '</div>' +
+                        '</td>' +
+                        '</tr>';
+                    html += div;
+                }
+                if(html){
+                    $(".links").html(html);
+                }
+            }
         }
     });
     /**
@@ -85,11 +113,31 @@
     }
 
     $("#make").bind("click",function () {
-        var url=$("#url").val();
+        var url = $("#url").val();
         url && makeQrcode(url);
         //cookie缓存
-        url && Cookies.set('qr_url', url, { expires: 30 });
+        addCookie(url)
     });
+
+    // 添加cookie
+    function addCookie(link) {
+        if(link){
+            var cookiesStr = Cookies.get("qr_url");
+            if(cookiesStr){
+                if(cookiesStr.indexOf(link)<-1){
+                    var cookieArr = cookiesStr.split(",");
+                    if(cookieArr.length>3){
+                        cookieArr.shift;
+                    }
+                    cookieArr.push(link)
+                    cookiesStr = cookieArr.join(",") ;
+                }
+            }else{
+                cookiesStr += link;
+            }
+            url && Cookies.set('qr_url', cookiesStr, { expires: 30 });
+        }
+    }
     function makeQrcode(url) {
         if(url){
             var str = toUtf8(url);
@@ -103,9 +151,11 @@
         }
     }
 
-    $(".use").bind("click",function () {
-        makeQrcode($("#"+$(this).attr("for")).html())
-    })
+    $(".use").live("click",function () {
+        var index = $(this).attr("index");
+        makeQrcode($(".link_"+index).html())
+    });
+
     $(".append").bind("click",function () {
         var prefix=$(this).data("prefix");
         var suffix=$(this).data("suffix");
